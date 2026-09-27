@@ -5,8 +5,6 @@ const app = express();
 
 app.use(express.json());
 
-
-
 app.post("/notes", async (req, res) => {
   const { title, description } = req.body;
   const note = await noteModel.create({
@@ -15,13 +13,17 @@ app.post("/notes", async (req, res) => {
   });
   res.status(201).json({
     message: " Note created successfully",
-    note
+    note,
   });
 });
 
-// app.get("/notes", (req, res) => {
-//   res.send(notes);
-// });
+app.get("/notes", async (req, res) => {
+  const notes = await noteModel.find();
+  res.status(200).json({
+    message : "notes fetched successfully",
+    notes
+  })
+});
 
 // app.delete("/notes/:id", (req, res) => {
 //   const id = Number(req.params.id);
